@@ -18,7 +18,7 @@ define(function (require) {
     return new TemplateVisType({
       name: 'gauge',
       title: 'Gauge',
-      description: 'SAINT-GOBAIN Plugin Kibana - Display as Gauge Chart',
+      description: 'Display as Gauge Chart',
       icon: 'fa-tachometer',
       template: require('plugins/gauge_sg/gauge_sg.html'),
       params: {
