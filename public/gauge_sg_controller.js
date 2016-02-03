@@ -1,6 +1,5 @@
 define(function (require) {
 
-  var d3 = require('d3');
   var c3 = require('./bower_components/c3');
 
   var module = require('ui/modules').get('kibana/gauge_sg', ['kibana']);
