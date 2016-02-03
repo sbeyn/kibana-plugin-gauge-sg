@@ -1,6 +1,6 @@
 
-kibana-plugin-line
-==================
+kibana-plugin-gauge
+===================
 
 
 Introduction
@@ -17,26 +17,23 @@ Contenu
 -------
 ```
 .
-+-- index.js
-+-- package.json
-+-- public
-    +-- bower_components
-    ¦   +-- c3
-    ¦   +-- moment
-    +-- line_sg_controller.js
-    +-- line_sg.html
-    +-- line_sg.js
-    +-- line_sg.less
-    +-- line_sg_params.html
-    +-- styles
-        +-- accordion.css
+├── index.js
+├── package.json
+├── public
+│   ├── bower_components
+│   │   └── c3
+│   ├── gauge_sg_controller.js
+│   ├── gauge_sg.html
+│   ├── gauge_sg.js
+│   ├── gauge_sg.less
+│   └── gauge_sg_params.html
+└── README.md
 ```
 Le plugin a été créé à partir des librairies Kibana et basé sur le framework Angularjs.
 
 Liste des librairies ajoutées:
 
 * c3.js: C3 makes it easy to generate D3-based charts by wrapping the code required to construct the entire chart. We don't need to write D3 code any more. (http://c3js.org/)
-* moment.js: Parse, validate, manipulate, and display dates in JavaScript.(http://momentjs.com/)
 
 
 Installation
@@ -45,7 +42,7 @@ Installation
 **1)** Ajouter le plugin 
 ```
 	$ cd <path>/kibana/src/plugins
-	$ git clone <depot> line-sg	
+	$ git clone <depot> gauge-sg	
 ```
 
 **2)** Redémarrer kibana 
