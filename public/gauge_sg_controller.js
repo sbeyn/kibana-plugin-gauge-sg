@@ -7,12 +7,15 @@ define(function (require) {
   module.controller('KbnGaugeVisController', function ($scope, $element, Private) {
     var tabifyAggResponse = Private(require('ui/agg_response/tabify/tabify'));
     var metrics = $scope.metrics = [];
+    var hold ="";
+    var wold= "";
     var label = "";
     var title = "";
-     var idchart = "";
+    var idchart = "";
 	
     $scope.chart = null;
     $scope.showGraph = function() {
+	console.log("----chart generator----");
         label = ( !$scope.vis.params.labelGauge ) ? $scope.metrics[0].label : $scope.vis.params.labelGauge;
 	$scope.title = label;
         idchart = $element.children().find(".chartc3");
@@ -50,22 +53,18 @@ define(function (require) {
 
     $scope.$watch(
          function () {
-             var h = $(idchart[0]).closest('div.visualize-chart').height();
-             var w = $(idchart[0]).closest('div.visualize-chart').width();
-
-             if (idchart.length > 0 && h > 0 && w > 0) {
-                 $scope.chart.resize({height: h - 50, width: w - 50});
-             }
+           var elem = $(idchart[0]).closest('div.visualize-chart');
+           var h = elem.height();
+           var w = elem.width();
+           if (idchart.length > 0 && h > 0 && w > 0) {
+                   if (hold != h || wold != w) {
+                         $scope.chart.resize({height: h - 50, width: w - 50});
+                         hold = elem.height();
+                         wold = elem.width();
+                   }
+           }
          },
          true
     );
-
-  }).directive('c3', function () {
-    return {
-       link: function (scope, elm, attr) {
-                //code...
-        }
-    };
-  });
 
 });
