@@ -6,7 +6,7 @@ kibana-plugin-gauge
 Introduction
 -------------
 
-Ce plugin permet la création d'un graphique de type jauge sur Kibana Version 4.3.0:
+Ce plugin permet la création d'un graphique de type jauge sur Kibana Version 4.2.2, 4.3.0, 4.4.0:
 
 * Définition du label
 * Choix des couleurs
