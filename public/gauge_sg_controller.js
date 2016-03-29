@@ -29,6 +29,10 @@ define(function (require) {
 	config.color = {pattern: [$scope.vis.params.colorlevel1Gauge, $scope.vis.params.colorlevel2Gauge, $scope.vis.params.colorlevel3Gauge, $scope.vis.params.colorlevel4Gauge], threshold: { max: $scope.vis.params.maxGauge,values: [$scope.vis.params.level1Gauge, $scope.vis.params.level2Gauge, $scope.vis.params.level3Gauge, $scope.vis.params.level4Gauge] }};
         config.data.types={"data1":"gauge"};
         $scope.chart = c3.generate(config);
+        var elem = $(idchart[0]).closest('div.visualize-chart');
+        var h = elem.height();
+        var w = elem.width();
+        $scope.chart.resize({height: h - 50, width: w - 50});
     }
 
     $scope.processTableGroups = function (tableGroups) {
