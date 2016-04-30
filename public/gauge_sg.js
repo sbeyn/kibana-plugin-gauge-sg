@@ -45,10 +45,20 @@ define(function (require) {
           name: 'metric',
           title: 'Metric',
           min: 1,
+          max: 1,
           defaults: [
             { type: 'count', schema: 'metric' }
           ]
+        },
+        {
+          group: 'buckets',
+          name: 'segment',
+          title: 'X-Axis',
+          min: 0,
+          max: 1,
+          aggFilter: ['terms']
         }
+
       ])
     });
   }
