@@ -28,6 +28,20 @@ define(function (require) {
         config.gauge = {'min': $scope.vis.params.minGauge, max: $scope.vis.params.maxGauge}; 
 	config.color = {pattern: [$scope.vis.params.colorlevel1Gauge, $scope.vis.params.colorlevel2Gauge, $scope.vis.params.colorlevel3Gauge, $scope.vis.params.colorlevel4Gauge], threshold: { max: $scope.vis.params.maxGauge,values: [$scope.vis.params.level1Gauge, $scope.vis.params.level2Gauge, $scope.vis.params.level3Gauge, $scope.vis.params.level4Gauge] }};
         config.data.types={"data1":"gauge"};
+    	config.gauge = {};
+        config.gauge.label= {
+            format: function(value, ratio) {
+		var format = d3.format(".2f");
+                return format(value) + "%";
+            }
+	};
+	config.tooltip = {};
+	config.tooltip.format = {
+            value: function (value, ratio, id) {
+                var format = d3.format(".2f");
+                return format(value) + "%";
+            }
+	};
         $scope.chart = c3.generate(config);
         var elem = $(idchart[0]).closest('div.visualize-chart');
         var h = elem.height();
@@ -37,10 +51,13 @@ define(function (require) {
 
     $scope.processTableGroups = function (tableGroups) {
       tableGroups.tables.forEach(function (table) {
-        table.columns.forEach(function (column, i) {
-          var fieldFormatter = table.aggConfig(column).fieldFormatter();
-          metrics[0] = {label: column.title, value: table.rows[0][i]};
+	var nbr_r = (Object.keys(table.rows).length);
+	var nbr_c = (Object.keys(table.columns).length);
+        var sum = 0;
+        table.rows.forEach(function (row, i) {
+          sum += row[nbr_c - 1];
         });
+      	metrics[0] = {label: table.columns[nbr_c - 1].title, value: (sum / nbr_r)};
       });
     };
 
