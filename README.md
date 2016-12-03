@@ -2,6 +2,7 @@
 kibana-plugin-gauge
 ===================
 
+![screenshot](./screenshot.png)
 
 Introduction
 -------------
