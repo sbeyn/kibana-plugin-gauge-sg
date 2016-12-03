@@ -40,15 +40,15 @@ Liste des librairies ajoutées:
 Installation
 ------------
 
-Pour les version de kibana-4.x
+Pour les versions de kibana-4.x
 ```
         $ cd <path>/kibana/installedPlugins
         $ git clone -b 4.x <depot> gauge-sg
 ```
 
-Pour les version de kibana-5.x
+Pour les versions de kibana-5.x
 ```
-        $ cd <path>/kibana/installedPlugins
+        $ cd <path>/kibana/plugins
         $ git clone <depot> gauge-sg
 ```
 
