@@ -6,7 +6,7 @@ kibana-plugin-gauge
 Introduction
 -------------
 
-Ce plugin permet la création d'un graphique de type jauge sur Kibana Version 4.2.2, 4.3.0, 4.4.0, 4.5.0:
+Ce plugin permet la création d'un graphique de type jauge sur Kibana Version 5.x:
 
 * Définition du label
 * Choix des couleurs
@@ -39,11 +39,17 @@ Liste des librairies ajoutées:
 Installation
 ------------
 
+Pour les version de kibana-4.x
+```
+        $ cd <path>/kibana/installedPlugins
+        $ git clone -b 4.x <depot> gauge-sg
+```
+
+Pour les version de kibana-5.x
 ```
         $ cd <path>/kibana/installedPlugins
         $ git clone <depot> gauge-sg
 ```
-
 
 Désinstallation
 ---------------
