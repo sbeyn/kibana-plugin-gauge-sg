@@ -28,6 +28,7 @@ define(function (require) {
           heightGauge: 180,
 	  minGauge: 0,
 	  maxGauge: 100,
+          sizeGauge: 100,
 	  level1Gauge: 30,
 	  colorlevel1Gauge: '#FF0000',
 	  level2Gauge: 60,
