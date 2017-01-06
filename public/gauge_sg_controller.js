@@ -12,36 +12,78 @@ define(function (require) {
     var label = "";
     var title = "";
     var idchart = "";
-	
+
     $scope.chart = null;
+
+    $scope.getThresholds = function() {
+        var actualThresholds = []
+        var rawThresholds = [
+            $scope.vis.params.level1Gauge, 
+            $scope.vis.params.level2Gauge, 
+            $scope.vis.params.level3Gauge, 
+            $scope.vis.params.level4Gauge
+        ] 
+
+        // if the user inputs gauge levels as percentages, we need to map them back to the real value. 
+        if ($scope.vis.params.thresholdsAsPercentages){
+            actualThresholds = rawThresholds.map(function(item){
+                return item * $scope.vis.params.maxGauge / 100;
+            });
+        } else {
+            actualThresholds = rawThresholds;
+        }
+        console.log(actualThresholds);
+        return actualThresholds;
+    }
+
     $scope.showGraph = function() {
+
 	console.log("----chart generator----");
+
         label = ( !$scope.vis.params.labelGauge ) ? $scope.metrics[0].label : $scope.vis.params.labelGauge;
 	$scope.title = label;
         idchart = $element.children().find(".chartc3");
-        var config = {};
-        config.bindto = idchart[0];
-        config.data = {};
-        config.data.json = {};
-        config.data.json.data1 = [$scope.metrics[0].value];
-        config.data.names = {'data1': label}; 
-	config.color = {pattern: [$scope.vis.params.colorlevel1Gauge, $scope.vis.params.colorlevel2Gauge, $scope.vis.params.colorlevel3Gauge, $scope.vis.params.colorlevel4Gauge], threshold: { max: $scope.vis.params.maxGauge,values: [$scope.vis.params.level1Gauge, $scope.vis.params.level2Gauge, $scope.vis.params.level3Gauge, $scope.vis.params.level4Gauge] }};
-        config.data.types={"data1":"gauge"};
-    	config.gauge = {};
-        config.gauge = {min: $scope.vis.params.minGauge, max: $scope.vis.params.maxGauge, width: $scope.vis.params.sizeGauge};
-        config.gauge.label= {
-            format: function(value, ratio) {
-		var format = d3.format(".2f");
-                return format(value) + "%";
+        var config = {
+            bindto: idchart[0],
+            data: {
+                columns: [
+                    ['data',$scope.metrics[0].value]
+                ],
+                type: "gauge"
+            },
+            color: {
+                pattern: [
+                    $scope.vis.params.colorlevel1Gauge, 
+                    $scope.vis.params.colorlevel2Gauge,
+                    $scope.vis.params.colorlevel3Gauge, 
+                    $scope.vis.params.colorlevel4Gauge
+                ], 
+                threshold: { 
+                    values: $scope.getThresholds()
+                }
+            },
+            gauge:{
+                min: $scope.vis.params.minGauge,
+                max: $scope.vis.params.maxGauge, 
+                size: $scope.vis.params.sizeGauge,
+                label:{
+                    format: function(value, ratio) {
+                        percentValue = value / $scope.vis.params.maxGauge * 100
+                        var format = d3.format(".2f");
+                        return format(percentValue) + "%";
+                    }
+                } 
+            },
+            tooltip: {
+                format: {
+                    value: function (value, ratio, id) {
+                        var format = d3.format(".2f");
+                        return format(value);
+                    }
+                }
             }
-	};
-	config.tooltip = {};
-	config.tooltip.format = {
-            value: function (value, ratio, id) {
-                var format = d3.format(".2f");
-                return format(value) + "%";
-            }
-	};
+        }
+        console.log(config);
         $scope.chart = c3.generate(config);
         var elem = $(idchart[0]).closest('div.visualize-chart');
         var h = elem.height();
@@ -51,13 +93,19 @@ define(function (require) {
 
     $scope.processTableGroups = function (tableGroups) {
       tableGroups.tables.forEach(function (table) {
+        //what the hell is happening here?
 	var nbr_r = (Object.keys(table.rows).length);
 	var nbr_c = (Object.keys(table.columns).length);
         var sum = 0;
+        console.log(table);
         table.rows.forEach(function (row, i) {
           sum += row[nbr_c - 1];
         });
-      	metrics[0] = {label: table.columns[nbr_c - 1].title, value: (((sum / nbr_r) * 100) / $scope.vis.params.maxGauge)};
+      	metrics[0] = {
+            label: table.columns[nbr_c - 1].title, 
+            percent : (((sum / nbr_r) * 100) / $scope.vis.params.maxGauge),
+            value: sum / nbr_r
+        };
       });
     };
 
@@ -66,6 +114,7 @@ define(function (require) {
         metrics.length = 0;
         $scope.processTableGroups(tabifyAggResponse($scope.vis, resp));
 	$scope.showGraph();
+        $scope.chart.load({});
       }
     });
 

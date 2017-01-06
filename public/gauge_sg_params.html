@@ -15,6 +15,10 @@
     <input type="range" ng-model="vis.params.sizeGauge" class="form-control" min="0" max="100" />
 </div>
 <div class="form-group">
+  <label style="display:inline">Input thresholds as percentages?</label>
+  <input type="checkbox" ng-model="vis.params.thresholdsAsPercentages" class="form-control"/>
+</div>
+<div class="form-group">
   <label>Gauge level1</label>
   <input type="number" ng-model="vis.params.level1Gauge" class="form-control"/>
   <input type="color" ng-model="vis.params.colorlevel1Gauge" class="form-control"/>
