@@ -1,4 +1,9 @@
 {
   "name": "gauge_sg",
-  "version": "5.0.0"
+  "version": "5.6.1",
+  "description": "Gauge Visualization",
+  "main": "index.js",
+  "kibana": {
+    "version": "5.6.1"
+  }
 }
